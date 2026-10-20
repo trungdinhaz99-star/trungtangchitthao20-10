@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Women's Day 20/10 🌷</title>
+
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; overflow-x: hidden;
+  font-family: "Segoe UI", sans-serif; color: white;
+  background: linear-gradient(135deg, #ff8fbd, #c28bff, #ffb7d5);
+  background-size: 300% 300%; animation: bg 10s ease infinite;
+}
+@keyframes bg {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.container {
+  min-height: 100vh; display: flex; justify-content: center; align-items: center;
+  padding: 35px 16px; text-align: center; position: relative; z-index: 1;
+}
+.card {
+  width: 100%; max-width: 540px; padding: 32px 22px;
+  border: 1px solid rgba(255,255,255,.6); border-radius: 28px;
+  background: rgba(255,255,255,.19); backdrop-filter: blur(12px);
+  box-shadow: 0 15px 50px rgba(110, 30, 90, .18);
+}
+.small-title { letter-spacing: 4px; font-size: 12px; font-weight: bold; }
+h1 {
+  font-size: clamp(35px, 8vw, 52px); line-height: 1.15;
+  margin: 18px 0 12px; text-shadow: 0 4px 15px #d94e9b;
+}
+.subtitle { font-size: 16px; line-height: 1.7; }
+.envelope {
+  font-size: 88px; cursor: pointer; display: inline-block; margin: 18px 0;
+  animation: bounce 2s infinite; filter: drop-shadow(0 8px 10px #d94e9b);
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-12px) rotate(3deg); }
+}
+button {
+  border: 0; border-radius: 999px; padding: 14px 25px; font-size: 15px;
+  font-weight: bold; color: #d94691; background: white; cursor: pointer;
+  box-shadow: 0 6px 20px #ad478c55; transition: transform .2s, box-shadow .2s;
+}
+button:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 10px 25px #ad478c66; }
+#letter {
+  display: none; text-align: left; margin-top: 24px; padding: 23px;
+  color: #a82e72; background: rgba(255,255,255,.93);
+  border-radius: 20px; line-height: 1.9; animation: appear .8s ease;
+}
+#letter.show { display: block; }
+#letter h2 { text-align: center; color: #ec4899; margin-top: 0; }
+.signature { text-align: right; font-weight: bold; }
+footer { margin-top: 25px; font-size: 12px; opacity: .9; }
+.floating {
+  position: fixed; bottom: -40px; pointer-events: none; z-index: 0;
+  animation: floatUp linear forwards;
+}
+@keyframes floatUp {
+  to { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
+}
+@keyframes appear {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+#confetti {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 5;
+}
+.music-note { font-size: 12px; opacity: .85; margin-top: 14px; }
+@media (max-width: 420px) {
+  .card { padding: 27px 17px; }
+  #letter { padding: 18px; }
+}
+</style>
+</head>
+
+<body>
+<canvas id="confetti"></canvas>
+
+<div class="container">
+  <main class="card">
+    <div class="small-title">GUI CHI THAO</div>
+    <h1>Happy<br>20/10 🌷</h1>
+    <p class="subtitle">
+      Chúc mừng ngày Phụ nữ Việt Nam!<br>
+      Một món quà nhỏ dành tặng người đặc biệt 💗
+    </p>
+
+    <div class="envelope" id="envelope" role="button" tabindex="0"
+         aria-label="Mở thư chúc mừng" onclick="openLetter()">💌</div>
+
+    <p id="hint">Có một lá thư bí mật dành cho bạn...</p>
+    <button id="openBtn" onclick="openLetter()">Mở thư ngay 💖</button>
+
+    <section id="letter">
+      <h2>Gửi chị Thảo 11C3 🌸</h2>
+      <p>
+        Nhân ngày 20/10, em chúc chị luôn vui vẻ, xinh đẹp
+        và gặp thật nhiều điều may mắn trong cuộc sống.
+      </p>
+      <p>
+        em mong rằng mỗi ngày của chị đều ngập tràn tiếng cười,
+        luôn hạnh phúc và ngày càng trẻ đẹp nhé
+      </p>
+      <p>
+        và chị phải luôn giữ nụ cười trên mặt nhá
+        chả biết chúc gì nữa=)) 💕
+      </p>
+      <p class="signature">
+        Chúc chị có ngày 20/10 thật đáng nhớ💗<br>
+        💗 DINH VAN TRUNG 💗
+      </p>
+    </section>
+
+    <div class="music-note">🌷 Gửi chị thảo ngàn yêu thương trong ngày đặc biệt 🌷</div>
+    <footer>ngay phu nu Viet Nam ♡ 20.10</footer>
+  </main>
+</div>
+
+<audio id="bgMusic" loop preload="auto">
+  <source src="snaptik.vn_7300794680898374920.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let opened = false;
+
+async function openLetter() {
+  // Phát nhạc ngay trong thao tác nhấn của người xem để trình duyệt cho phép.
+  const music = document.getElementById("bgMusic");
+  if (music.paused) {
+    try {
+      await music.play();
+    } catch (error) {
+      console.log("Không phát được nhạc. Hãy kiểm tra file MP3 nằm cạnh file HTML.", error);
+    }
+  }
+
+  const letter = document.getElementById("letter");
+  if (opened) {
+    letter.classList.toggle("show");
+    return;
+  }
+
+  opened = true;
+  letter.classList.add("show");
+  document.getElementById("hint").textContent =
+    "Một chút yêu thương dành riêng cho bạn 💕";
+  document.getElementById("openBtn").textContent = "Đóng / mở thư 💌";
+  document.getElementById("envelope").textContent = "💝";
+  burstConfetti();
+}
+
+document.getElementById("envelope").addEventListener("keydown", e => {
+  if (e.key === "Enter" || e.key === " ") {
+    e.preventDefault();
+    openLetter();
+  }
+});
+
+// Hoa và trái tim bay
+const decorations = ["💗", "💕", "🌸", "🌷", "✨", "💖"];
+function createFloating() {
+  const item = document.createElement("div");
+  item.className = "floating";
+  item.textContent = decorations[Math.floor(Math.random() * decorations.length)];
+  item.style.left = Math.random() * 100 + "vw";
+  item.style.fontSize = (15 + Math.random() * 22) + "px";
+  item.style.animationDuration = (5 + Math.random() * 6) + "s";
+  document.body.appendChild(item);
+  setTimeout(() => item.remove(), 11000);
+}
+setInterval(createFloating, 450);
+
+// Pháo giấy bằng canvas
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+let pieces = [];
+let animating = false;
+
+function resizeCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  canvas.style.width = window.innerWidth + "px";
+  canvas.style.height = window.innerHeight + "px";
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+function burstConfetti() {
+  const colors = ["#ff3e9d", "#ffe066", "#ffffff", "#a78bfa", "#ff8c69", "#70e1c8"];
+  for (let i = 0; i < 140; i++) {
+    pieces.push({
+      x: window.innerWidth / 2, y: window.innerHeight / 2,
+      vx: (Math.random() - 0.5) * 12, vy: (Math.random() - 0.8) * 12,
+      size: 3 + Math.random() * 5,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      life: 90 + Math.random() * 40
+    });
+  }
+  if (!animating) {
+    animating = true;
+    requestAnimationFrame(drawConfetti);
+  }
+}
+function drawConfetti() {
+  ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  pieces = pieces.filter(p => p.life > 0);
+  for (const p of pieces) {
+    p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.vx *= 0.99; p.life--;
+    ctx.globalAlpha = Math.min(1, p.life / 25);
+    ctx.fillStyle = p.color;
+    ctx.fillRect(p.x, p.y, p.size, p.size * 1.5);
+  }
+  ctx.globalAlpha = 1;
+  if (pieces.length > 0) {
+    requestAnimationFrame(drawConfetti);
+  } else {
+    animating = false;
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  }
+}
+</script>
+</body>
+</html>
